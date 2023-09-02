@@ -2,6 +2,7 @@ from aiogram import Router
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
+from keyboards.callback import markup
 from lexicon.lexicon import LEXICON
 
 router: Router = Router()
@@ -18,6 +19,6 @@ async def process_help_command(message: Message):
 
 
 @router.message(Command(commands=['shop']))
-async def process_help_command(message: Message):
-    await message.answer(text=LEXICON['/shop'])
+async def process_shop_command(message: Message):
+    await message.answer(text=LEXICON['/shop'], reply_markup=markup)
 
