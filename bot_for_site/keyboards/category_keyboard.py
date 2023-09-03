@@ -2,6 +2,11 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from keyboards.callback import GoodsCallbackFactory
 
+back_to_main_button: InlineKeyboardButton = InlineKeyboardButton(
+    text='Назад',
+    callback_data='back_to_main'
+)
+
 category_1: InlineKeyboardButton = InlineKeyboardButton(
                     text='СТРОЙМАТЕРИАЛЫ',
                     callback_data=GoodsCallbackFactory(
@@ -26,4 +31,5 @@ category_3: InlineKeyboardButton = InlineKeyboardButton(
 markup_category: InlineKeyboardMarkup = InlineKeyboardMarkup(
                     inline_keyboard=[[category_1],
                                      [category_2],
-                                     [category_3]])
+                                     [category_3],
+                                     [back_to_main_button]])
