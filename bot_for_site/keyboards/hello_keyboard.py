@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from keyboards.callback import GoodsCallbackFactory
+from keyboards.callback_class import GoodsCallbackFactory
 
 hello_button_1: InlineKeyboardButton = InlineKeyboardButton(
     text='номенклатура',

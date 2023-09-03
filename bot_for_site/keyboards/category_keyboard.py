@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from keyboards.callback import GoodsCallbackFactory
+from keyboards.callback_class import GoodsCallbackFactory
 
 back_to_main_button: InlineKeyboardButton = InlineKeyboardButton(
     text='Назад',
