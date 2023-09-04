@@ -1,7 +1,5 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
-.env
-venv/
 .idea/
 __pycache__/
 *.py[cod]
@@ -112,7 +110,7 @@ celerybeat.pid
 .env
 .venv
 env/
-venv/
+.venv/
 ENV/
 env.bak/
 venv.bak/
