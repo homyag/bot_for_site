@@ -5,8 +5,7 @@ from aiogram.types import Message, CallbackQuery
 from keyboards.category_keyboard import markup_category
 from keyboards.hello_keyboard import markup_hello
 from keyboards.subcategory_keyboard import markup_subcategory_1, \
-    markup_subcategory_2, markup_subcategory_3, back_button, \
-    markup_subcategory_3_1
+    markup_subcategory_2, markup_subcategory_3, markup_subcategory_3_1
 from lexicon.lexicon import LEXICON, LEXICON_GOODS
 
 router: Router = Router()
@@ -71,9 +70,3 @@ async def process_category_3(callback_query: CallbackQuery):
     await callback_query.message.edit_reply_markup(
         reply_markup=markup_subcategory_3)
 
-
-# асфальтобетон, все марки: 8000 рублей за тонну
-@router.callback_query(F.data == 'goods|3|1|0')
-async def process_sub_category_3(callback_query: CallbackQuery):
-    await callback_query.message.edit_text(text=LEXICON_GOODS['асфальтобетон'],
-                                           reply_markup=markup_subcategory_3_1)

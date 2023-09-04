@@ -69,6 +69,8 @@ subcategory_3_1: InlineKeyboardButton = InlineKeyboardButton(
                                             item_id=0).pack())
 
 markup_subcategory_3: InlineKeyboardMarkup = InlineKeyboardMarkup(
+                    text='<b>асфальтобетон</b>,\nвсе марки: 8000 рублей за '
+                         'тонну',
                     inline_keyboard=[[subcategory_3_1],
                                      [back_button]])
 
