@@ -71,3 +71,6 @@ subcategory_3_1: InlineKeyboardButton = InlineKeyboardButton(
 markup_subcategory_3: InlineKeyboardMarkup = InlineKeyboardMarkup(
                     inline_keyboard=[[subcategory_3_1],
                                      [back_button]])
+
+markup_subcategory_3_1: InlineKeyboardMarkup = InlineKeyboardMarkup(
+                    inline_keyboard=[[back_button]])

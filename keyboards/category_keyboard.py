@@ -8,7 +8,7 @@ back_to_main_button: InlineKeyboardButton = InlineKeyboardButton(
 )
 
 category_1: InlineKeyboardButton = InlineKeyboardButton(
-                    text='СТРОЙМАТЕРИАЛЫ',
+                    text='СТРОИТЕЛЬНЫЕ СМЕСИ',
                     callback_data=GoodsCallbackFactory(
                                             category_id=1,
                                             subcategory_id=0,
