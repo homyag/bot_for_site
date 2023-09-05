@@ -1,7 +1,5 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from keyboards.callback_class import GoodsCallbackFactory
-
 # кнопки для номенклатуры бетона
 concrete_В75П3F50W2: InlineKeyboardButton = InlineKeyboardButton(
     text="артикул В7,5П3F50W2 - 10000 рублей/м3",
