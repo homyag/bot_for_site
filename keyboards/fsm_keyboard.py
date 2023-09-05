@@ -1,7 +1,5 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from keyboards.callback_class import GoodsCallbackFactory
-
 yes_button_for_fsm: InlineKeyboardButton = InlineKeyboardButton(
     text='да',
     callback_data='yes_i_agree_button'

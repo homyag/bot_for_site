@@ -2,11 +2,12 @@ from aiogram import Router, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 
+from keyboards.asphalt_keyboards import markup_asphalt
 from keyboards.category_keyboard import markup_category
 from keyboards.hello_keyboard import markup_hello
 from keyboards.subcategory_keyboard import markup_subcategory_1, \
-    markup_subcategory_2, markup_subcategory_3, markup_subcategory_3_1
-from lexicon.lexicon import LEXICON, LEXICON_GOODS
+    markup_subcategory_2, markup_subcategory_3
+from lexicon.lexicon import LEXICON
 
 router: Router = Router()
 
@@ -49,24 +50,4 @@ async def process_back_to_main_button(callback_query: CallbackQuery):
              'коммерческое предложение',
         reply_markup=markup_hello)
 
-
-# Хендлер для обработки нажатия на кнопку категории СТРОЙМАТЕРИАЛЫ
-@router.callback_query(F.data == 'goods|1|0|0')
-async def process_category_1(callback_query: CallbackQuery):
-    await callback_query.message.edit_reply_markup(
-        reply_markup=markup_subcategory_1)
-
-
-# Хендлер для обработки нажатия на кнопку категории НЕРУДНЫЕ МАТЕРИАЛЫ
-@router.callback_query(F.data == 'goods|2|0|0')
-async def process_category_2(callback_query: CallbackQuery):
-    await callback_query.message.edit_reply_markup(
-        reply_markup=markup_subcategory_2)
-
-
-# Хендлер для обработки нажатия на кнопку категории АСФАЛЬТОБЕТОН
-@router.callback_query(F.data == 'goods|3|0|0')
-async def process_category_3(callback_query: CallbackQuery):
-    await callback_query.message.edit_reply_markup(
-        reply_markup=markup_subcategory_3)
 
