@@ -2,10 +2,12 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+
 from config_data.config import Config, load_config
 from handlers import user_handlers, fsm_handlers, products_handlers, \
     notification_handlers
 from main_menu.main_menu_button import set_main_menu
+from middlewares import SessionMiddleware, RegisteredMiddleware
 
 # Инициализируем логгер
 logger = logging.getLogger(__name__)

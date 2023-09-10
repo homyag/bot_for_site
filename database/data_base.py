@@ -1,5 +1,5 @@
 CATEGORIES: dict[int, str] = {
-    1: 'СТРОЙМАТЕРИАЛЫ',
+    1: 'СТРОИТЕЛЬНЫЕ МАТЕРИАЛЫ',
     2: 'НЕРУДНЫЕ МАТЕРИАЛЫ',
     3: 'АСФАЛЬТОБЕТОН',
 }
@@ -44,14 +44,3 @@ GOODS: dict[int, tuple] = {
     27: ('Песок из отсева дробления', 6, 1259, 'нерудные материалы'),
     28: ('Асфальтобетон', 7, 8000, 'все марки'),
 }
-
-# indices_to_format = [0, 2]
-#
-# formatted_messages = []
-#
-# for key, value in GOODS.items():
-#     formatted_values = [value[i] for i in indices_to_format]
-#     formatted_message = "Артикул: {}\n{} рублей за тонну\n".format(*formatted_values)
-#     formatted_messages.append(formatted_message)
-#
-# print(*formatted_messages)
