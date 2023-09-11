@@ -206,7 +206,7 @@ async def process_granite_5_10_button(callback_query: CallbackQuery):
 
 
 @router.callback_query(F.data == 'asphalt')
-async def process_granite_5_10_button(callback_query: CallbackQuery):
+async def process_asphalt_button(callback_query: CallbackQuery):
     await callback_query.answer(text="Вы выбрали асфальт",
                                 show_alert=True,
                                 reply_markup=markup_asphalt)

@@ -2,7 +2,8 @@ import logging
 import datetime
 from typing import List, Optional
 
-from sqlalchemy import BigInteger, VARCHAR, Float, DATE, Integer, String
+from sqlalchemy import BigInteger, VARCHAR, Float, DATE, Integer, String, \
+    ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.connect import Base
@@ -24,7 +25,7 @@ class User(Base):
                                                     default=datetime.date.today())
     # последнее обновление пользователя
     upd_date: Mapped[datetime.date] = mapped_column(DATE,
-                                                    onupdate=datetime.date.today())
+                                                    onupdate=datetime.date.today(), nullable=True)
 
     fullname: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
     e_mail: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
@@ -38,10 +39,19 @@ class User(Base):
     def __str__(self) -> str:
         return f"<User:{self.id} {self.username}>"
 
+    @property
+    def to_dict(self) -> dict:
+        """
+        Конвертирует модель в словарь
+        """
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Product(Base):
     __tablename__ = 'products'
 
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
+                                         nullable=False)
     product_id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(VARCHAR(129), nullable=False)
     category_id: Mapped[int] = mapped_column(Integer, nullable=False)
