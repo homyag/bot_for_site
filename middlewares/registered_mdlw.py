@@ -4,12 +4,15 @@ import logging
 from typing import Callable, Dict, Any, Awaitable
 
 from aiogram import BaseMiddleware
+from aiogram.fsm.context import FSMContext
+from aiogram.handlers import message
 from aiogram.types import Message, CallbackQuery, TelegramObject, user
 
 from sqlalchemy import select
 from sqlalchemy.engine import ScalarResult
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from FSM.user_states_for_price import user_dict
 from database.models import User
 from DAO.data_access_object import DataAccessObject
 

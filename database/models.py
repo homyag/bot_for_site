@@ -28,8 +28,9 @@ class User(Base):
                                                     onupdate=datetime.date.today(), nullable=True)
 
     fullname: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
+    name: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
     e_mail: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
-    phone: Mapped[str] = mapped_column(VARCHAR(12), nullable=True)
+    phone: Mapped[str] = mapped_column(String, nullable=True)
     locale: Mapped[str] = mapped_column(VARCHAR(2), default="ru")
 
     products: Mapped[List['Product']] = relationship(

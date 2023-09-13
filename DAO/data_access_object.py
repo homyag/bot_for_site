@@ -1,5 +1,5 @@
 import logging
-from typing import NoReturn, Any, Union
+from typing import NoReturn, Any, Union, Optional
 from dataclasses import dataclass
 
 from sqlalchemy import select
@@ -21,13 +21,14 @@ class DataAccessObject:
     #  Get object from id
     async def get_object(
         self, db_object: Union[User], db_object_id: int = None
-    ) -> list:
+    ) -> Optional[User]:
         stmt = select(db_object)
         if db_object_id:
             stmt = stmt.where(db_object.id == db_object_id)
 
         result: ScalarResult = await self.session.execute(stmt)
-        return [item.to_dict for item in result.scalars().all()]
+        return result.scalars().first()
+        #return [item.to_dict for item in result.scalars().all()]
 
     #  Merge object
     async def add_object(

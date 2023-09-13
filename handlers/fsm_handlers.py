@@ -4,7 +4,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram.types import CallbackQuery, Message
 
+from DAO.data_access_object import DataAccessObject
 from FSM.user_states_for_price import FSMFillForm, user_dict
+from database import User
 from keyboards.fsm_keyboard import markup_start_fsm
 from keyboards.hello_keyboard import markup_hello
 
@@ -74,9 +76,23 @@ async def process_fillform_command(message: Message, state: FSMContext):
 # Этот хэндлер будет срабатывать, если введено корректное имя
 # и переводить в состояние ожидания ввода e-mail
 @router.message(StateFilter(FSMFillForm.fill_name), F.text.isalpha())
-async def process_name_sent(message: Message, state: FSMContext):
+async def process_name_sent(message: Message, state: FSMContext,
+                            dao: DataAccessObject):
     # Сохраняем введенное имя в хранилище по ключу "name"
     await state.update_data(name=message.text)
+
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.name = user_data.get("name")
+    await dao.session.commit()
+
     await message.answer(text='Спасибо!\n\nА теперь введите ваш e-mail')
     # Устанавливаем состояние ожидания ввода возраста
     await state.set_state(FSMFillForm.fill_mail)
@@ -95,9 +111,22 @@ async def warning_not_name(message: Message):
 # Этот хэндлер переводит в состояние ввода e-mail и ожидания ввода
 # телефонного номера
 @router.message(StateFilter(FSMFillForm.fill_mail))
-async def process_mail_sent(message: Message, state: FSMContext):
+async def process_mail_sent(message: Message, state: FSMContext,
+                            dao: DataAccessObject):
     # Сохраняем почту в хранилище по ключу "mail"
     await state.update_data(mail=message.text)
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.e_mail = user_data.get("mail")
+    await dao.session.commit()
+
     await message.answer(text='Спасибо!\n\nУкажите Ваш номер телефона')
     # Устанавливаем состояние ожидания ввода телефонного номера
     await state.set_state(FSMFillForm.fill_phone)
@@ -105,12 +134,23 @@ async def process_mail_sent(message: Message, state: FSMContext):
 
 # Этот хэндлер переводит в состояние ввода телефонного номера
 @router.message(StateFilter(FSMFillForm.fill_phone))
-async def process_phone_sent(message: Message, state: FSMContext):
-    # Сохраняем почту в хранилище по ключу "phone"
+async def process_phone_sent(message: Message, state: FSMContext,
+                             dao: DataAccessObject):
+    # Сохраняем телефон в хранилище по ключу "phone"
     await state.update_data(phone=message.text)
-    # У объекта state есть асинхронные методы get_data() и get_state(),
-    # по которым можно получить данные пользователя внутри машины состояний,
-    # а также текущее состояние, в котором находится пользователь.
+
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.phone = user_data.get("phone")
+    await dao.session.commit()
+
     user_dict[message.from_user.id] = await state.get_data()
     # Завершаем машину состояний
     await state.clear()
