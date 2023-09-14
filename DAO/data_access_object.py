@@ -9,7 +9,7 @@ from sqlalchemy.exc import (
     NoResultFound,
 )
 
-from database.models import User
+from database.models import User, Product, Order
 
 logger = logging.getLogger(__name__)
 
@@ -34,5 +34,37 @@ class DataAccessObject:
     async def add_object(
         self,
         db_object: Union[User],
+    ) -> None:
+        await self.session.merge(db_object)
+
+    #  Order
+    async def get_order(
+        self, db_object: Union[Order], db_object_id: int = None
+    ) -> Optional[Order]:
+        stmt = select(db_object)
+        if db_object_id:
+            stmt = stmt.where(db_object.id == db_object_id)
+            result: ScalarResult = await self.session.execute(stmt)
+            return result.scalars().first()
+
+    async def add_order(
+            self,
+            db_object: Union[Order],
+    ) -> None:
+        await self.session.merge(db_object)
+
+    # Product
+    async def get_product(
+        self, db_object: Union[Product], db_object_id: int = None
+    ) -> Optional[Product]:
+        stmt = select(db_object)
+        if db_object_id:
+            stmt = stmt.where(db_object.id == db_object_id)
+            result: ScalarResult = await self.session.execute(stmt)
+            return result.scalars().first()
+
+    async def add_product(
+            self,
+            db_object: Union[Product],
     ) -> None:
         await self.session.merge(db_object)

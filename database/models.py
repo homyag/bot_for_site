@@ -2,8 +2,9 @@ import logging
 import datetime
 from typing import List, Optional
 
+
 from sqlalchemy import BigInteger, VARCHAR, Float, DATE, Integer, String, \
-    ForeignKey
+    ForeignKey, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.connect import Base
@@ -33,9 +34,7 @@ class User(Base):
     phone: Mapped[str] = mapped_column(String, nullable=True)
     locale: Mapped[str] = mapped_column(VARCHAR(2), default="ru")
 
-    products: Mapped[List['Product']] = relationship(
-        'Product', back_populates="users", cascade="all, delete-orphan"
-    )
+    orders = relationship('Order', back_populates='user')
 
     def __str__(self) -> str:
         return f"<User:{self.id} {self.username}>"
@@ -53,18 +52,46 @@ class Product(Base):
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
                                          nullable=False)
-    product_id: Mapped[int] = mapped_column(primary_key=True)
+    product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True),
+                                             primary_key=True,
+                                             nullable=False,
+                                             )
     name: Mapped[str] = mapped_column(VARCHAR(129), nullable=False)
+    category_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    subcategory_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    price: Mapped[float] = mapped_column(Float, nullable=True)
+    description: Mapped[Optional[str]] = mapped_column(String(1000),
+                                                       nullable=True)
+
+    # # Связь с пользователями
+    # users: Mapped[List['User']] = relationship(
+    #     'User', back_populates='products'
+    # )
+    orders = relationship('Order', back_populates='product')
+
+    def __repr__(self) -> str:
+        return f"Product(product_id={self.product_id!r}, name={self.name!r}, price={self.price!r})"
+
+
+#TODO добавить дату оформления заказа
+class Order(Base):
+    __tablename__ = 'orders'
+
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
+                                         nullable=False)
+    product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('products.product_id'), nullable=False)
+
+    name: Mapped[str] = mapped_column(VARCHAR(129),
+                                      primary_key=True, nullable=False)
     category_id: Mapped[int] = mapped_column(Integer, nullable=False)
     subcategory_id: Mapped[int] = mapped_column(Integer, nullable=False)
     price: Mapped[float] = mapped_column(Float, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(String(1000),
                                                        nullable=True)
 
-    # Связь с пользователями
-    users: Mapped[List['User']] = relationship(
-        'User', back_populates='products'
-    )
+    user = relationship('User', back_populates='orders')
+
+    product = relationship('Product', back_populates='orders')
 
     def __repr__(self) -> str:
-        return f"Product(product_id={self.product_id!r}, name={self.name!r}, price={self.price!r})"
+        return f"Order(name={self.name!r}, price={self.price!r})"

@@ -1,6 +1,7 @@
-from .models import User, Product
+from .models import User, Order, Product
 
 __all__ = [
     "User",
+    "Order",
     "Product"
 ]

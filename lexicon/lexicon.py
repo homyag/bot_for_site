@@ -23,10 +23,10 @@ LEXICON: dict[str, str] = {
     }
 
 LEXICON_MAIN_MENU: dict[str, str] = {
-    '/command_1': 'command_1 desription',
-    '/command_2': 'command_2 desription',
-    '/command_3': 'command_3 desription',
-    '/command_4': 'command_4 desription'
+    '/help': LEXICON['/help'],
+    '/shop': 'перейти к выбору товаров',
+    '/fillform': 'заполнить анкету для получения КП',
+    '/contacts': 'обратная связь'
 }
 
 LEXICON_GOODS: dict[str, str] = {
