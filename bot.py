@@ -3,7 +3,6 @@ import logging
 import os
 
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand
 from FSM.user_states_for_price import storage
 from database.connect import create_async_engine_db, async_connection_db
 

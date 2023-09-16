@@ -2,20 +2,26 @@ from aiogram import Router, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 
-from keyboards.asphalt_keyboards import markup_asphalt
+from config_data import load_config
+from keyboards.admin_keyboards import kb_builder
 from keyboards.category_keyboard import markup_category
 from keyboards.hello_keyboard import markup_hello
-from keyboards.subcategory_keyboard import markup_subcategory_1, \
-    markup_subcategory_2, markup_subcategory_3
 from lexicon.lexicon import LEXICON
+
 
 router: Router = Router()
 
 
 @router.message(CommandStart())
 async def process_start_command(message: Message):
-    await message.answer(text=LEXICON['/start'],
-                         reply_markup=markup_hello)
+    config = load_config("bot.ini")
+    if message.from_user.id in config.tg_bot.admin_ids:
+        await message.answer(text="Вы зарегистрированы как администратор",
+                             reply_markup=kb_builder.as_markup(
+                                 resize_keyboard=True))
+    else:
+        await message.answer(text=LEXICON['/start'],
+                             reply_markup=markup_hello)
 
 
 @router.message(Command(commands=['help']))
