@@ -5,7 +5,7 @@ from keyboards.subcategory_keyboard import back_button
 # асфальт
 
 asphalt: InlineKeyboardButton = InlineKeyboardButton(
-    text="Асфальтобетон, все марки - 8000 рублей за тонну",
+    text="Асфальтобетон - 8000 рублей/тонна",
     callback_data='asphalt'
 )
 

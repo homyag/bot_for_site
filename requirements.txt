@@ -1,4 +1,4 @@
-aiogram==3.0.0rc2
+aiogram==3.0.0
 SQLAlchemy==2.0.20
 redis==5.0.0
 aioredis==2.0.1

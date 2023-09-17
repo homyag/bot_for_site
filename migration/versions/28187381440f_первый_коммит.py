@@ -1,8 +1,8 @@
-"""первая миграция
+"""первый коммит
 
-Revision ID: e8fa17e15c34
+Revision ID: 28187381440f
 Revises: 
-Create Date: 2023-09-14 22:44:36.343720
+Create Date: 2023-09-17 18:52:21.911846
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e8fa17e15c34'
+revision: str = '28187381440f'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -35,7 +35,7 @@ def upgrade() -> None:
     schema='public'
     )
     op.create_table('products',
-    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.BigInteger(), nullable=False),
     sa.Column('product_id', sa.UUID(), nullable=False),
     sa.Column('name', sa.VARCHAR(length=129), nullable=False),
     sa.Column('category_id', sa.Integer(), nullable=True),
@@ -47,13 +47,14 @@ def upgrade() -> None:
     schema='public'
     )
     op.create_table('orders',
-    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.BigInteger(), nullable=False),
     sa.Column('product_id', sa.UUID(), nullable=False),
     sa.Column('name', sa.VARCHAR(length=129), nullable=False),
     sa.Column('category_id', sa.Integer(), nullable=False),
     sa.Column('subcategory_id', sa.Integer(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=True),
+    sa.Column('order_date', sa.DATE(), nullable=True),
     sa.ForeignKeyConstraint(['product_id'], ['public.products.product_id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['public.users.id'], ),
     sa.PrimaryKeyConstraint('name'),

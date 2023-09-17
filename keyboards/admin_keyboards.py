@@ -1,9 +1,7 @@
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, \
-    InlineKeyboardButton, InlineKeyboardMarkup
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 admin_button_1: InlineKeyboardButton = InlineKeyboardButton(
-    text='Зарегистрированные',
+    text='Зарегистрированные пользователи',
     callback_data='get_registered_users')
 admin_button_2: InlineKeyboardButton = InlineKeyboardButton(
     text='Запросы КП',
@@ -13,4 +11,5 @@ admin_button_3: InlineKeyboardButton = InlineKeyboardButton(
     callback_data='get_orders')
 
 admin_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
-    inline_keyboard=[[admin_button_1, admin_button_2, admin_button_3]])
+    inline_keyboard=[[admin_button_1], [admin_button_2], [admin_button_3]])
+
