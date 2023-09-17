@@ -2,7 +2,6 @@ import logging
 import datetime
 from typing import List, Optional
 
-
 from sqlalchemy import BigInteger, VARCHAR, Float, DATE, Integer, String, \
     ForeignKey, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -26,7 +25,8 @@ class User(Base):
                                                     default=datetime.date.today())
     # последнее обновление пользователя
     upd_date: Mapped[datetime.date] = mapped_column(DATE,
-                                                    onupdate=datetime.date.today(), nullable=True)
+                                                    onupdate=datetime.date.today(),
+                                                    nullable=True)
 
     fullname: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
     name: Mapped[str] = mapped_column(VARCHAR(129), nullable=True)
@@ -50,7 +50,7 @@ class User(Base):
 class Product(Base):
     __tablename__ = 'products'
 
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
+    user_id: Mapped[int] = mapped_column(BigInteger, ForeignKey('users.id'),
                                          nullable=False)
     product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True),
                                              primary_key=True,
@@ -63,23 +63,20 @@ class Product(Base):
     description: Mapped[Optional[str]] = mapped_column(String(1000),
                                                        nullable=True)
 
-    # # Связь с пользователями
-    # users: Mapped[List['User']] = relationship(
-    #     'User', back_populates='products'
-    # )
     orders = relationship('Order', back_populates='product')
 
     def __repr__(self) -> str:
         return f"Product(product_id={self.product_id!r}, name={self.name!r}, price={self.price!r})"
 
 
-#TODO добавить дату оформления заказа
 class Order(Base):
     __tablename__ = 'orders'
 
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
+    user_id: Mapped[int] = mapped_column(BigInteger, ForeignKey('users.id'),
                                          nullable=False)
-    product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('products.product_id'), nullable=False)
+    product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True),
+                                             ForeignKey('products.product_id'),
+                                             nullable=False)
 
     name: Mapped[str] = mapped_column(VARCHAR(129),
                                       primary_key=True, nullable=False)
@@ -88,6 +85,8 @@ class Order(Base):
     price: Mapped[float] = mapped_column(Float, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(String(1000),
                                                        nullable=True)
+    order_date: Mapped[datetime.date] = mapped_column(DATE,
+                                                      default=datetime.date.today(), nullable=True)
 
     user = relationship('User', back_populates='orders')
 

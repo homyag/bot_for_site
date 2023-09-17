@@ -8,7 +8,7 @@ from database.connect import create_async_engine_db, async_connection_db
 
 from config_data.config import Config, load_config
 from handlers import user_handlers, products_handlers, \
-    notification_handlers, admins_handlers, fsm_handlers
+    notification_handlers, admins_handlers, fsm_handlers, cart_handler
 from main_menu.main_menu_button import set_main_menu
 
 from middlewares import SessionMiddleware, RegisteredMiddleware
@@ -52,6 +52,7 @@ async def main(configfile):
 
     # Регистриуем роутеры в диспетчере
     dp.include_router(admins_handlers.router)
+    dp.include_router(cart_handler.router)
     dp.include_router(user_handlers.router)
     dp.include_router(products_handlers.router)
     dp.include_router(notification_handlers.router)

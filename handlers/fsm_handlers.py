@@ -154,11 +154,24 @@ async def process_phone_sent(message: Message, state: FSMContext,
     user_dict[message.from_user.id] = await state.get_data()
     # Завершаем машину состояний
     await state.clear()
+    # Уведомление админов о новом запросе на КП
+    await send_notification_to_admins()
     await message.answer(text='Спасибо, Ваши данные сохранены!\nНаши '
                               'менеджеры свяжутся с Вами в ближайшее '
                               'время!\n\nВы можете посмотреть '
                               'введенные данные командой /showdata\n. Для '
                               'перехода к номенклатуре введите команду /shop')
+
+
+# Функция для отправки уведомления админам
+async def send_notification_to_admins():
+    config = configparser.ConfigParser()
+    config.read('bot.ini')
+    admin_ids = config.get('tg_bot', 'admin_ids').split(',')
+    admin_ids = [int(admin_id) for admin_id in admin_ids]
+
+    for admin_id in admin_ids:
+        await bot.send_message(admin_id, "Получен новый запрос на КП")
 
 
 # Этот хэндлер будет срабатывать на отправку команды /showdata
@@ -180,6 +193,6 @@ async def process_showdata_command(message: Message):
 
 # Этот хэндлер будет срабатывать на любые сообщения, кроме тех
 # для которых есть отдельные хэндлеры, вне состояний
-@router.message(StateFilter(default_state))
-async def send_echo(message: Message):
-    await message.reply(text='Извините, я не понимаю этой команды')
+# @router.message(StateFilter(default_state))
+# async def send_echo(message: Message):
+#     await message.reply(text='Извините, я не понимаю этой команды')

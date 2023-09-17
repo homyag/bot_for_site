@@ -34,6 +34,20 @@ class DataAccessObject:
     ) -> None:
         await self.session.merge(db_object)
 
+    # users who check price
+    async def get_users_with_contacts(self):
+        stmt = select(User).filter(User.e_mail.isnot(None),
+                                   User.phone.isnot(None))
+        result: ScalarResult = await self.session.execute(stmt)
+        return result.scalars().all()
+
+    # get all users
+    async def get_all_users(self):
+        stmt = select(User)
+        result: ScalarResult = await self.session.execute(stmt)
+        return result.scalars().all()
+
+
     #  Order
     async def get_order(
         self, db_object: Union[Order], db_object_id: int = None
@@ -68,11 +82,12 @@ class DataAccessObject:
                 orders_alias.name,
                 orders_alias.price,
                 orders_alias.description,
+                orders_alias.order_date
             )
             .join(orders_alias, users_alias.id == orders_alias.user_id)
             .group_by(users_alias.username, users_alias.fullname,
                       users_alias.phone, orders_alias.name, orders_alias.price,
-                      orders_alias.description)
+                      orders_alias.description, orders_alias.order_date)
         )
 
         result = await self.session.execute(query)
@@ -86,7 +101,8 @@ class DataAccessObject:
                 "phone": row[2],
                 "name": row[3],
                 "price": row[4],
-                "description": row[5]
+                "description": row[5],
+                "order_date": row[6]
             }
             for row in rows
         ]
@@ -109,3 +125,30 @@ class DataAccessObject:
     ) -> None:
         await self.session.merge(db_object)
 
+    async def get_user_orders(self, user_id: int) -> list[dict]:
+        users_alias = aliased(User)
+        orders_alias = aliased(Order)
+
+        query = (
+            select(
+                orders_alias.name,
+                orders_alias.price
+            )
+            .join(users_alias, users_alias.id == orders_alias.user_id)
+            .where(users_alias.id == user_id)
+        # Фильтр по Telegram ID пользователя
+        )
+
+        result = await self.session.execute(query)
+        rows = result.all()
+
+        # Создайте список словарей с заказами пользователя
+        user_orders = [
+            {
+                "name": row[0],
+                "price": row[1],
+            }
+            for row in rows
+        ]
+
+        return user_orders

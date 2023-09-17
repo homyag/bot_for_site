@@ -19,7 +19,8 @@ async def process_start_command(message: Message):
         await message.answer(text=f"Привет {message.from_user.full_name}. Вы "
                                   "зарегистрированы как "
                                   "администратор. Список команд "
-                                  "администратора доступен кнопками ниже.",
+                                  "администратора доступен кнопками ниже, "
+                                  "а также командой /admin.",
                              reply_markup=admin_keyboard)
     else:
         await message.answer(text=LEXICON['/start'],
@@ -34,6 +35,12 @@ async def process_help_command(message: Message):
 @router.message(Command(commands=['shop']))
 async def process_shop_command(message: Message):
     await message.answer(text=LEXICON['/shop'], reply_markup=markup_category)
+
+
+@router.message(Command(commands=['contacts']))
+async def process_shop_command(message: Message):
+    await message.answer(text=LEXICON['/contacts'],
+                         reply_markup=markup_category)
 
 
 # Хендлер для обработки нажатия кнопки "номенклатура"
