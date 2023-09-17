@@ -1,13 +1,10 @@
 import logging
-from typing import NoReturn, Any, Union, Optional
-from dataclasses import dataclass
+from typing import NoReturn, Union, Optional
 
 from sqlalchemy import select
 from sqlalchemy.engine import ScalarResult
 from sqlalchemy.ext.asyncio.session import AsyncSession
-from sqlalchemy.exc import (
-    NoResultFound,
-)
+from sqlalchemy.orm import aliased
 
 from database.models import User, Product, Order
 
@@ -53,6 +50,49 @@ class DataAccessObject:
     ) -> None:
         await self.session.merge(db_object)
 
+    # получение списка всех заказов
+    async def get_all_orders(self) -> list[Order]:
+        stmt = select(Order)
+        result: ScalarResult = await self.session.execute(stmt)
+        return result.scalars().all()
+
+    async def get_all_orders_with_user_data(self) -> list[dict]:
+        users_alias = aliased(User)
+        orders_alias = aliased(Order)
+
+        query = (
+            select(
+                users_alias.username,
+                users_alias.fullname,
+                users_alias.phone,
+                orders_alias.name,
+                orders_alias.price,
+                orders_alias.description,
+            )
+            .join(orders_alias, users_alias.id == orders_alias.user_id)
+            .group_by(users_alias.username, users_alias.fullname,
+                      users_alias.phone, orders_alias.name, orders_alias.price,
+                      orders_alias.description)
+        )
+
+        result = await self.session.execute(query)
+        rows = result.all()
+
+        # Создайте список словарей вручную, указав ключи и значения
+        orders_with_user_data = [
+            {
+                "username": row[0],
+                "fullname": row[1],
+                "phone": row[2],
+                "name": row[3],
+                "price": row[4],
+                "description": row[5]
+            }
+            for row in rows
+        ]
+
+        return orders_with_user_data
+
     # Product
     async def get_product(
         self, db_object: Union[Product], db_object_id: int = None
@@ -68,3 +108,4 @@ class DataAccessObject:
             db_object: Union[Product],
     ) -> None:
         await self.session.merge(db_object)
+

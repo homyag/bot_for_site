@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 
 from config_data import load_config
-from keyboards.admin_keyboards import kb_builder
+from keyboards.admin_keyboards import admin_keyboard
 from keyboards.category_keyboard import markup_category
 from keyboards.hello_keyboard import markup_hello
 from lexicon.lexicon import LEXICON
@@ -16,9 +16,11 @@ router: Router = Router()
 async def process_start_command(message: Message):
     config = load_config("bot.ini")
     if message.from_user.id in config.tg_bot.admin_ids:
-        await message.answer(text="Вы зарегистрированы как администратор",
-                             reply_markup=kb_builder.as_markup(
-                                 resize_keyboard=True))
+        await message.answer(text=f"Привет {message.from_user.full_name}. Вы "
+                                  "зарегистрированы как "
+                                  "администратор. Список команд "
+                                  "администратора доступен кнопками ниже.",
+                             reply_markup=admin_keyboard)
     else:
         await message.answer(text=LEXICON['/start'],
                              reply_markup=markup_hello)
@@ -55,5 +57,4 @@ async def process_back_to_main_button(callback_query: CallbackQuery):
         text='Вы можете ознакомиться с ассортиментом или запросить '
              'коммерческое предложение',
         reply_markup=markup_hello)
-
 
