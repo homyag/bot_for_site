@@ -77,7 +77,6 @@ class Order(Base):
     product_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True),
                                              ForeignKey('products.product_id'),
                                              nullable=False)
-
     name: Mapped[str] = mapped_column(VARCHAR(129),
                                       primary_key=True, nullable=False)
     category_id: Mapped[int] = mapped_column(Integer, nullable=False)

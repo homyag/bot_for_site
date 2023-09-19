@@ -2,6 +2,7 @@ import logging
 from typing import NoReturn, Union, Optional
 
 from sqlalchemy import select
+from sqlalchemy.sql.functions import max, func
 from sqlalchemy.engine import ScalarResult
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import aliased
@@ -17,7 +18,7 @@ class DataAccessObject:
 
     #  Get object from id
     async def get_object(
-        self, db_object: Union[User], db_object_id: int = None
+            self, db_object: Union[User], db_object_id: int = None
     ) -> Optional[User]:
         stmt = select(db_object)
         if db_object_id:
@@ -25,12 +26,12 @@ class DataAccessObject:
 
         result: ScalarResult = await self.session.execute(stmt)
         return result.scalars().first()
-        #return [item.to_dict for item in result.scalars().all()]
+        # return [item.to_dict for item in result.scalars().all()]
 
     #  Merge object
     async def add_object(
-        self,
-        db_object: Union[User],
+            self,
+            db_object: Union[User],
     ) -> None:
         await self.session.merge(db_object)
 
@@ -47,10 +48,9 @@ class DataAccessObject:
         result: ScalarResult = await self.session.execute(stmt)
         return result.scalars().all()
 
-
     #  Order
     async def get_order(
-        self, db_object: Union[Order], db_object_id: int = None
+            self, db_object: Union[Order], db_object_id: int = None
     ) -> Optional[Order]:
         stmt = select(db_object)
         if db_object_id:
@@ -111,7 +111,7 @@ class DataAccessObject:
 
     # Product
     async def get_product(
-        self, db_object: Union[Product], db_object_id: int = None
+            self, db_object: Union[Product], db_object_id: int = None
     ) -> Optional[Product]:
         stmt = select(db_object)
         if db_object_id:
@@ -136,7 +136,7 @@ class DataAccessObject:
             )
             .join(users_alias, users_alias.id == orders_alias.user_id)
             .where(users_alias.id == user_id)
-        # Фильтр по Telegram ID пользователя
+            # Фильтр по Telegram ID пользователя
         )
 
         result = await self.session.execute(query)
