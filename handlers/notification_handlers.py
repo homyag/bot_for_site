@@ -42,8 +42,7 @@ async def process_m100_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=10000.00,  # цена продукта
         description="описание бетон марки М100",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -70,8 +69,7 @@ async def process_m200_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=11000.00,  # цена продукта
         description="описание бетон марки М200",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -98,8 +96,7 @@ async def process_m250_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=11500.00,  # цена продукта
         description="описание бетон марки М250",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -126,8 +123,7 @@ async def process_m300_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=12000.00,  # цена продукта
         description="описание бетон марки М300",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -154,8 +150,7 @@ async def process_m350_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=12500.00,  # цена продукта
         description="описание бетон марки М350",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -182,8 +177,7 @@ async def process_m400_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=13500.00,  # цена продукта
         description="описание бетон марки М400",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -210,8 +204,7 @@ async def process_pm100_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=9500.00,  # цена продукта
         description="описание монтажный раствор РМ100ПК4",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -238,8 +231,7 @@ async def process_pm150_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=10000.00,  # цена продукта
         description="описание монтажный раствор РМ150ПК4",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -266,8 +258,7 @@ async def process_pm150_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=10500.00,  # цена продукта
         description="описание монтажный раствор РМ200ПК4",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -294,8 +285,7 @@ async def process_m50_button(callback_query: CallbackQuery,
         subcategory_id=3,  # подкатегория продукта
         price=8500.00,  # цена продукта
         description="описание раствора кладочного М50ПК3",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -322,8 +312,7 @@ async def process_m75_button(callback_query: CallbackQuery,
         subcategory_id=3,  # подкатегория продукта
         price=9000.00,  # цена продукта
         description="описание раствора кладочного М75ПК3",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -349,9 +338,9 @@ async def process_m100_button(callback_query: CallbackQuery,
         category_id=1,  # категория продукта
         subcategory_id=3,  # подкатегория продукта
         price=9500.00,  # цена продукта
-        description="описание раствора кладочного М100ПК3",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        description="описание раствора кладочного М100ПК3",  # описание
+        # продукта
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -378,8 +367,7 @@ async def process_csm_1_2_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=10000.00,  # цена продукта
         description="Описание ЦПС 1/2",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -406,8 +394,7 @@ async def process_csm_1_3_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=9500.00,  # цена продукта
         description="Описание ЦПС 1/3",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -434,8 +421,7 @@ async def process_csm_1_4_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=9000.00,  # цена продукта
         description="Описание ЦПС 1/4",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -462,8 +448,7 @@ async def process_csm_1_5_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=8500.00,  # цена продукта
         description="Описание ЦПС 1/5",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -490,8 +475,7 @@ async def process_csm_1_6_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=7750.00,  # цена продукта
         description="Описание ЦПС 1/6",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -518,8 +502,7 @@ async def process_csm_1_7_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=7500.00,  # цена продукта
         description="Описание ЦПС 1/7",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -546,8 +529,7 @@ async def process_csm_1_8_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=7250.00,  # цена продукта
         description="Описание ЦПС 1/8",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -574,8 +556,7 @@ async def process_csm_1_9_button(callback_query: CallbackQuery,
         subcategory_id=4,  # подкатегория продукта
         price=7000.00,  # цена продукта
         description="Описание ЦПС 1/9",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -602,8 +583,7 @@ async def process_csm_1_10_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=1950.00,  # цена продукта
         description="Описание песка карьерного",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -630,8 +610,7 @@ async def process_alluvial_sand_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=1800.00,  # цена продукта
         description="Описание песка намывного",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -658,8 +637,7 @@ async def process_quarry_sand_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=1950.00,  # цена продукта
         description="Описание песка карьерного",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -669,9 +647,6 @@ async def process_quarry_sand_button(callback_query: CallbackQuery,
 @router.callback_query(F.data == 'crushing_sand')
 async def process_crushing_sand_button(callback_query: CallbackQuery,
                                        dao: DataAccessObject):
-    max_order_number = await dao.get_max_order_number(
-        callback_query.from_user.id)
-    order_number = max_order_number + 1
     await callback_query.answer(text="Вы выбрали Песок из отсева дробления",
                                 show_alert=True,
                                 reply_markup=markup_sand)
@@ -689,8 +664,7 @@ async def process_crushing_sand_button(callback_query: CallbackQuery,
         subcategory_id=1,  # подкатегория продукта
         price=1250.00,  # цена продукта
         description="Описание песка из отсева дробления",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -700,9 +674,6 @@ async def process_crushing_sand_button(callback_query: CallbackQuery,
 @router.callback_query(F.data == 'crushed_granite_10_20')
 async def process_granite_10_20_button(callback_query: CallbackQuery,
                                        dao: DataAccessObject):
-    max_order_number = await dao.get_max_order_number(
-        callback_query.from_user.id)
-    order_number = max_order_number + 1
     await callback_query.answer(text="Вы выбрали Щебень гранитный 10-20",
                                 show_alert=True,
                                 reply_markup=markup_crushed_granite)
@@ -720,8 +691,7 @@ async def process_granite_10_20_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=2100.00,  # цена продукта
         description="Описание щебня гранитного 10-20",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -731,9 +701,6 @@ async def process_granite_10_20_button(callback_query: CallbackQuery,
 @router.callback_query(F.data == 'crushed_granite_20_40')
 async def process_granite_20_40_button(callback_query: CallbackQuery,
                                        dao: DataAccessObject):
-    max_order_number = await dao.get_max_order_number(
-        callback_query.from_user.id)
-    order_number = max_order_number + 1
     await callback_query.answer(text="Вы выбрали Щебень гранитный 20-40",
                                 show_alert=True,
                                 reply_markup=markup_crushed_granite)
@@ -752,8 +719,7 @@ async def process_granite_20_40_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=2200.00,  # цена продукта
         description="Описание щебня гранитного 20-40",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -763,9 +729,6 @@ async def process_granite_20_40_button(callback_query: CallbackQuery,
 @router.callback_query(F.data == 'crushed_granite_5_10')
 async def process_granite_5_10_button(callback_query: CallbackQuery,
                                       dao: DataAccessObject):
-    max_order_number = await dao.get_max_order_number(
-        callback_query.from_user.id)
-    order_number = max_order_number + 1
     await callback_query.answer(text="Вы выбрали Щебень гранитный 5-10",
                                 show_alert=True,
                                 reply_markup=markup_crushed_granite)
@@ -783,8 +746,7 @@ async def process_granite_5_10_button(callback_query: CallbackQuery,
         subcategory_id=2,  # подкатегория продукта
         price=2300.00,  # цена продукта
         description="Описание щебня гранитного 5-10",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя
@@ -794,9 +756,6 @@ async def process_granite_5_10_button(callback_query: CallbackQuery,
 @router.callback_query(F.data == 'asphalt')
 async def process_asphalt_button(callback_query: CallbackQuery,
                                  dao: DataAccessObject):
-    max_order_number = await dao.get_max_order_number(
-        callback_query.from_user.id)
-    order_number = max_order_number + 1
     await callback_query.answer(text="Вы выбрали асфальт",
                                 show_alert=True,
                                 reply_markup=markup_asphalt)
@@ -814,8 +773,7 @@ async def process_asphalt_button(callback_query: CallbackQuery,
         subcategory_id=0,  # подкатегория продукта
         price=8000.00,  # цена продукта
         description="Описание асфальта",  # описание продукта
-        order_date=datetime.date.today(),
-        order_number=order_number
+        order_date=datetime.date.today()
     )
 
     # Добавление продукта в заказ пользователя

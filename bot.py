@@ -8,7 +8,8 @@ from database.connect import create_async_engine_db, async_connection_db
 
 from config_data.config import Config, load_config
 from handlers import user_handlers, products_handlers, \
-    notification_handlers, admins_handlers, fsm_handlers, cart_handler
+    notification_handlers, admins_handlers, fsm_handlers, cart_handler, \
+    admins_fsm_handlers
 from main_menu.main_menu_button import set_main_menu
 
 from middlewares import SessionMiddleware, RegisteredMiddleware
@@ -52,11 +53,13 @@ async def main(configfile):
 
     # Регистриуем роутеры в диспетчере
     dp.include_router(admins_handlers.router)
+    dp.include_router(admins_fsm_handlers.router)
     dp.include_router(cart_handler.router)
     dp.include_router(user_handlers.router)
     dp.include_router(products_handlers.router)
     dp.include_router(notification_handlers.router)
     dp.include_router(fsm_handlers.router)
+
 
     # Пропускаем накопившиеся апдейты и запускаем polling
     await bot.delete_webhook(drop_pending_updates=True)

@@ -17,7 +17,8 @@ async def process_admin_command(message: Message):
                                   f"Список доступных действий:",
                              reply_markup=admin_keyboard)
     else:
-        await message.answer(text=f"{message.from_user.full_name}, извините, но вы не являетесь администратором")
+        await message.answer(text=f"{message.from_user.full_name}, извините, "
+                                  f"но вы не являетесь администратором")
 
 
 @router.callback_query(F.data == 'get_orders')
@@ -90,4 +91,3 @@ async def get_asked_price_users(callback_query: CallbackQuery,
     else:
         await callback_query.message.answer(
             "У вас нет прав на выполнение этой команды.")
-

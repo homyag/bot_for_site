@@ -22,7 +22,8 @@ async def process_price_command(callback_query: CallbackQuery):
     await callback_query.message.edit_text(
         text='Для отправки нами коммерческого предложения оставьте,'
              '\nпожалуйста, свои координаты. Если Вы согласны, нажмите '
-             'кнопку "да" или введите команду /fillform.\nЕсли вы хотите прервать заполнение анкеты - отправьте команду /cancel',
+             'кнопку "да" или введите команду /fillform.\nЕсли вы хотите '
+             'прервать заполнение анкеты - отправьте команду /cancel',
         reply_markup=markup_start_fsm)
 
 

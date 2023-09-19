@@ -93,7 +93,7 @@ class DataAccessObject:
         result = await self.session.execute(query)
         rows = result.all()
 
-        # Создайте список словарей вручную, указав ключи и значения
+        # Создает список словарей
         orders_with_user_data = [
             {
                 "username": row[0],
