@@ -1,5 +1,5 @@
 import logging
-from typing import NoReturn, Union, Optional
+from typing import NoReturn, Union, Optional, Type
 
 from sqlalchemy import select
 from sqlalchemy.sql.functions import max, func
@@ -152,3 +152,13 @@ class DataAccessObject:
         ]
 
         return user_orders
+
+    async def get_user(
+            self, db_object: Type[User], db_object_user: str = None
+    ) -> Optional[User]:
+        stmt = select(db_object).where(db_object.__table__.c.username == db_object_user)
+
+
+        result: ScalarResult = await self.session.execute(stmt)
+        user = result.scalar()
+        return user

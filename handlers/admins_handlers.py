@@ -46,9 +46,10 @@ async def get_all_orders(callback_query: CallbackQuery, dao: DataAccessObject):
                     orders_text += f"<b>Дата заказа:</b> {order_date}\n"
                     orders_text += f"<b>Заказы:</b> {', '.join(products)}\n"
 
-            await callback_query.message.answer(f"Список заказов:\n{orders_text}")
+            await callback_query.message.answer(text=f"Список заказов:\n{orders_text}", reply_markup=admin_keyboard)
         else:
-            await callback_query.message.answer("Список заказов пуст.")
+            await callback_query.message.answer(text="Список заказов пуст.",
+                                                reply_markup=admin_keyboard)
     else:
         await callback_query.message.answer(
             "У вас нет прав на выполнение этой команды.")
@@ -63,8 +64,9 @@ async def get_asked_price_users(callback_query: CallbackQuery,
             users_text = "\n".join([
                                        f"User: {user.username}, Email: {user.e_mail}, Phone: {user.phone}"
                                        for user in users_with_contacts])
-            await callback_query.message.answer(
-                f"<b>Пользователи отправившие заявку на КП:</b>\n{users_text}")
+            await callback_query.message.answer(text=
+                f"<b>Пользователи отправившие заявку на КП:</b>\n"
+                f"{users_text}", reply_markup=admin_keyboard)
         else:
             await callback_query.message.answer(
                 "Нет пользователей отправивших заявку.")
@@ -87,7 +89,8 @@ async def get_asked_price_users(callback_query: CallbackQuery,
                 f" {user.phone}"
                 for user in get_all_registered_users])
             await callback_query.message.answer(
-                f"<b>Пользователи, зарегистрировавшиеся в боте:</b>\n{users_text}")
+                f"<b>Пользователи, зарегистрировавшиеся в боте:</b>\n"
+                f"{users_text}", reply_markup=admin_keyboard)
     else:
         await callback_query.message.answer(
             "У вас нет прав на выполнение этой команды.")
