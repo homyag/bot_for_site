@@ -4,9 +4,13 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram.types import CallbackQuery, Message
 
+from DAO.data_access_object import DataAccessObject
 from FSM.user_states_for_price import FSMFillForm, user_dict
+from config_data import load_config
+from database import User
 from keyboards.fsm_keyboard import markup_start_fsm
 from keyboards.hello_keyboard import markup_hello
+from utils.send_notification_to_admins import send_notification
 
 router: Router = Router()
 
@@ -18,7 +22,8 @@ async def process_price_command(callback_query: CallbackQuery):
     await callback_query.message.edit_text(
         text='Для отправки нами коммерческого предложения оставьте,'
              '\nпожалуйста, свои координаты. Если Вы согласны, нажмите '
-             'кнопку "да" или введите команду /fillform.',
+             'кнопку "да" или введите команду /fillform.\nЕсли вы хотите '
+             'прервать заполнение анкеты - отправьте команду /cancel',
         reply_markup=markup_start_fsm)
 
 
@@ -55,9 +60,11 @@ async def process_cancel_command_state(message: Message, state: FSMContext):
 
 
 @router.callback_query(F.data == 'yes_i_agree_button')
-async def process_fillform_command_from_yes(callback_query: CallbackQuery, state:
-FSMContext):
-    await callback_query.message.edit_text(text='Пожалуйста, введите ваше имя')
+async def process_fillform_command_from_yes(callback_query: CallbackQuery,
+                                            state:
+                                            FSMContext):
+    await callback_query.message.edit_text(text='Пожалуйста, введите ваше '
+                                                'имя.\nЕсли вы хотите прервать заполнение анкеты - отправьте команду /cancel')
     # Устанавливаем состояние ожидания ввода имени
     await state.set_state(FSMFillForm.fill_name)
 
@@ -74,9 +81,23 @@ async def process_fillform_command(message: Message, state: FSMContext):
 # Этот хэндлер будет срабатывать, если введено корректное имя
 # и переводить в состояние ожидания ввода e-mail
 @router.message(StateFilter(FSMFillForm.fill_name), F.text.isalpha())
-async def process_name_sent(message: Message, state: FSMContext):
+async def process_name_sent(message: Message, state: FSMContext,
+                            dao: DataAccessObject):
     # Сохраняем введенное имя в хранилище по ключу "name"
     await state.update_data(name=message.text)
+
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.name = user_data.get("name")
+    await dao.session.commit()
+
     await message.answer(text='Спасибо!\n\nА теперь введите ваш e-mail')
     # Устанавливаем состояние ожидания ввода возраста
     await state.set_state(FSMFillForm.fill_mail)
@@ -95,9 +116,22 @@ async def warning_not_name(message: Message):
 # Этот хэндлер переводит в состояние ввода e-mail и ожидания ввода
 # телефонного номера
 @router.message(StateFilter(FSMFillForm.fill_mail))
-async def process_mail_sent(message: Message, state: FSMContext):
+async def process_mail_sent(message: Message, state: FSMContext,
+                            dao: DataAccessObject):
     # Сохраняем почту в хранилище по ключу "mail"
     await state.update_data(mail=message.text)
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.e_mail = user_data.get("mail")
+    await dao.session.commit()
+
     await message.answer(text='Спасибо!\n\nУкажите Ваш номер телефона')
     # Устанавливаем состояние ожидания ввода телефонного номера
     await state.set_state(FSMFillForm.fill_phone)
@@ -105,15 +139,31 @@ async def process_mail_sent(message: Message, state: FSMContext):
 
 # Этот хэндлер переводит в состояние ввода телефонного номера
 @router.message(StateFilter(FSMFillForm.fill_phone))
-async def process_phone_sent(message: Message, state: FSMContext):
-    # Сохраняем почту в хранилище по ключу "phone"
+async def process_phone_sent(message: Message, state: FSMContext,
+                             dao: DataAccessObject):
+    config = load_config('bot.ini')
+    admin_ids = config.tg_bot.admin_ids
+    # Сохраняем телефон в хранилище по ключу "phone"
     await state.update_data(phone=message.text)
-    # У объекта state есть асинхронные методы get_data() и get_state(),
-    # по которым можно получить данные пользователя внутри машины состояний,
-    # а также текущее состояние, в котором находится пользователь.
+
+    # Получаем данные пользователя из состояния
+    user_data = await state.get_data()
+    user_id = message.from_user.id
+
+    # Получаем пользователя из базы данных
+    existing_user = await dao.get_object(User, user_id)
+
+    if existing_user:
+        # Если пользователь существует, обновляем его телефон
+        existing_user.phone = user_data.get("phone")
+    await dao.session.commit()
+
     user_dict[message.from_user.id] = await state.get_data()
+    notification_text = "Получен новый запрос на КП"
+    await send_notification(message.bot, admin_ids, notification_text)
     # Завершаем машину состояний
     await state.clear()
+    # Уведомление админов о новом запросе на КП
     await message.answer(text='Спасибо, Ваши данные сохранены!\nНаши '
                               'менеджеры свяжутся с Вами в ближайшее '
                               'время!\n\nВы можете посмотреть '
@@ -129,8 +179,8 @@ async def process_showdata_command(message: Message):
     if message.from_user.id in user_dict:
         await message.answer(
             text=f'Имя: {user_dict[message.from_user.id]["name"]}\n'
-                    f'E-mail: {user_dict[message.from_user.id]["mail"]}\n'
-                    f'Телефон: {user_dict[message.from_user.id]["phone"]}\n')
+                 f'E-mail: {user_dict[message.from_user.id]["mail"]}\n'
+                 f'Телефон: {user_dict[message.from_user.id]["phone"]}\n')
     else:
         # Если анкеты пользователя в базе нет - предлагаем заполнить
         await message.answer(text='Вы еще не заполняли анкету. '
