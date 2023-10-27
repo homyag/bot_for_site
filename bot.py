@@ -60,7 +60,6 @@ async def main(configfile):
     dp.include_router(notification_handlers.router)
     dp.include_router(fsm_handlers.router)
 
-
     # Пропускаем накопившиеся апдейты и запускаем polling
     await bot.delete_webhook(drop_pending_updates=True)
     # Регистрируем асинхронную функцию в диспетчере,

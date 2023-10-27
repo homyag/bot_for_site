@@ -156,8 +156,8 @@ class DataAccessObject:
     async def get_user(
             self, db_object: Type[User], db_object_user: str = None
     ) -> Optional[User]:
-        stmt = select(db_object).where(db_object.__table__.c.username == db_object_user)
-
+        stmt = select(db_object).where(
+            db_object.__table__.c.username == db_object_user)
 
         result: ScalarResult = await self.session.execute(stmt)
         user = result.scalar()
